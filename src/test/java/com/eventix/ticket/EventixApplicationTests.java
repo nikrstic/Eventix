@@ -1,4 +1,4 @@
-package com.example.Eventix;
+package com.eventix.ticket;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

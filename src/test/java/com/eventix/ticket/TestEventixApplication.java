@@ -1,4 +1,4 @@
-package com.example.Eventix;
+package com.eventix.ticket;
 
 import org.springframework.boot.SpringApplication;
 
