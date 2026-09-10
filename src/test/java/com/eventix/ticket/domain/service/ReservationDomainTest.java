@@ -1,4 +1,4 @@
-package com.eventix.ticket.service;
+package com.eventix.ticket.domain.service;
 
 import com.eventix.ticket.domain.exception.InvalidSeatBookingException;
 import com.eventix.ticket.domain.exception.SeatAlreadyHeldException;
@@ -6,7 +6,6 @@ import com.eventix.ticket.domain.model.Seat;
 import com.eventix.ticket.domain.model.SeatId;
 import com.eventix.ticket.domain.model.SeatStatus;
 import com.eventix.ticket.domain.model.UserId;
-import com.eventix.ticket.domain.service.ReservationDomainService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

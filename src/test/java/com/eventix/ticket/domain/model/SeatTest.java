@@ -1,11 +1,7 @@
-package com.eventix.ticket.model;
+package com.eventix.ticket.domain.model;
 
 import com.eventix.ticket.domain.exception.SeatAlreadyHeldException;
 import com.eventix.ticket.domain.exception.SeatIsNotHeldException;
-import com.eventix.ticket.domain.model.Seat;
-import com.eventix.ticket.domain.model.SeatId;
-import com.eventix.ticket.domain.model.SeatStatus;
-import com.eventix.ticket.domain.model.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
