@@ -1,6 +1,5 @@
-package com.eventix.ticket.model;
+package com.eventix.ticket.domain.model;
 
-import com.eventix.ticket.domain.model.SeatId;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
