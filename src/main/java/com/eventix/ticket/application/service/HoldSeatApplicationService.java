@@ -27,17 +27,18 @@ public class HoldSeatApplicationService implements HoldSeatUseCase {
     @Override
     public void holdSeat(HoldSeatsCommand command) {
         command.seatIds().forEach(seatId -> {
-            boolean locked = seatLockPort.acquireLock(seatId,command.userId(), Duration.ofMinutes(10));
-            if(!locked){
+            boolean locked = seatLockPort.acquireLock(seatId, command.userId(), Duration.ofMinutes(10));
+            if (!locked) {
                 throw new SeatAlreadyHeldException("Hold seat lock failed");
             }
+        });
 
             List<Seat> seats = seatRepositoryPort.findAllByIds(command.seatIds());
 
             reservationDomainService.holdMultipleSeats(command.userId(), seats);
 
             seatRepositoryPort.saveAll(seats);
-        });
+
 
     }
 
