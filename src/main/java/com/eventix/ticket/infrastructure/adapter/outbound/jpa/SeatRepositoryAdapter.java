@@ -3,11 +3,13 @@ package com.eventix.ticket.infrastructure.adapter.outbound.jpa;
 import com.eventix.ticket.application.port.outbound.SeatRepositoryPort;
 import com.eventix.ticket.domain.model.Seat;
 import com.eventix.ticket.domain.model.SeatId;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class SeatRepositoryAdapter implements SeatRepositoryPort {
 
     private final SeatSpringDataJpaRepository SpringDataRepository;
