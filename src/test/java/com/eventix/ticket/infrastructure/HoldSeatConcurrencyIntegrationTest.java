@@ -11,6 +11,7 @@ import com.eventix.ticket.domain.model.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
@@ -24,8 +25,7 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Testcontainers
@@ -53,11 +53,15 @@ public class HoldSeatConcurrencyIntegrationTest {
 
     private final SeatRepositoryPort seatRepositoryPort;
 
+    private final StringRedisTemplate redisTemplate;
+
     public HoldSeatConcurrencyIntegrationTest(
             HoldSeatUseCase holdSeatUseCase,
-            SeatRepositoryPort seatRepositoryPort) {
+            SeatRepositoryPort seatRepositoryPort,
+            StringRedisTemplate redisTemplate) {
         this.holdSeatUseCase = holdSeatUseCase;
         this.seatRepositoryPort = seatRepositoryPort;
+        this.redisTemplate = redisTemplate;
     }
 
     private SeatId targetSeatId;
@@ -99,6 +103,9 @@ public class HoldSeatConcurrencyIntegrationTest {
             }
             latch.countDown();
         }
+        String lockKey = "lock:seat:" + targetSeatId.value();
+        Boolean hasKey = redisTemplate.hasKey(lockKey);
+        assertFalse(hasKey, "Redis lock key should be cleaned up after execution!");
 
         assertEquals(1, successCount.get(), "Exactly 1 concurrent request must succeed");
         assertEquals(numOfThreads - 1, failureCount.get(), "Exactly n-1 concurrent requests must fail with lock exception");
