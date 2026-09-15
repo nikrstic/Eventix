@@ -7,10 +7,12 @@ import com.eventix.ticket.application.port.outbound.SeatRepositoryPort;
 import com.eventix.ticket.domain.exception.SeatAlreadyHeldException;
 import com.eventix.ticket.domain.model.Seat;
 import com.eventix.ticket.domain.service.ReservationDomainService;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
 
+@Service
 public class HoldSeatApplicationService implements HoldSeatUseCase {
 
     private final SeatRepositoryPort seatRepositoryPort;
