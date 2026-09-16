@@ -5,6 +5,7 @@ import com.eventix.ticket.domain.exception.InvalidSeatBookingException;
 import com.eventix.ticket.domain.exception.SeatAlreadyHeldException;
 import com.eventix.ticket.domain.exception.SeatIsNotHeldException;
 import com.eventix.ticket.domain.model.Seat;
+import com.eventix.ticket.domain.model.SeatStatus;
 import com.eventix.ticket.domain.model.UserId;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class ReservationDomainService {
             throw new InvalidSeatBookingException("Seats can't be more than " + MAX_SEATS_PER_USER);
         }
         for(Seat seat : seatsHold){
+            if (seat.getStatus() == SeatStatus.HELD) {
+                throw new SeatAlreadyHeldException("Seat " + seat.getId() + " is already held.");
+            }
             seat.hold(userId);
         }
     }
