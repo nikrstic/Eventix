@@ -43,10 +43,12 @@ public class HoldSeatApplicationServiceTest {
     @Test
     public void shouldThrowExceptionOnSecondHoldAttempt(){
         SeatId seatId = SeatId.generate();
+        Seat seat = new Seat(seatId);
+
         UserId userId = UserId.generate();
         HoldSeatsCommand holdSeatsCommand = new HoldSeatsCommand(userId, List.of(seatId));
         HoldSeatsCommand holdSeatsCommand1 = new HoldSeatsCommand(userId, List.of(seatId));
-
+        when(seatRepositoryPort.findAllByIds(List.of(seatId))).thenReturn(List.of(seat));
         when(seatLockPort.acquireLock(seatId,userId, Duration.ofMinutes(10)))
                 .thenReturn(true)
                 .thenReturn(false);

@@ -40,6 +40,10 @@ public class HoldSeatApplicationService implements HoldSeatUseCase {
         try {
             List<Seat> seats = seatRepositoryPort.findAllByIds(command.seatIds());
 
+            if (seats.size() != command.seatIds().size()) {
+                throw new IllegalArgumentException("One or more requested seats do not exist.");
+            }
+
             reservationDomainService.holdMultipleSeats(command.userId(), seats);
 
             seatRepositoryPort.saveAll(seats);
